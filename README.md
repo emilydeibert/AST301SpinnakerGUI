@@ -18,5 +18,12 @@ This GUI is currently optimized for **Python 3**, but Python 2 support will be c
 
 These packages can all be installed via pip through the command line:
 
-    `pip install simple-pyspin`
+    pip install simple-pyspin
+    
+## Opening the GUI
+
+To open the GUI, you simply run the following command from the command line:
+
+    python ast301GUI.py
+
 
