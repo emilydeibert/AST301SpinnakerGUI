@@ -3,7 +3,7 @@ A Python-based GUI for the AST301 lab using a FLIR camera and the Spinnaker SDK.
 
 This GUI is currently optimized for **Python 3**, but Python 2 support will be coming soon.
 
-- [Installation of required dependencies](##Installation%20of%20required%20dependencies)
+- [Installation of required dependencies](#installation-of-required-dependencies)
   * [Sub-heading](#sub-heading)
     + [Sub-sub-heading](#sub-sub-heading)
 - [Heading](#heading-1)
