@@ -17,5 +17,6 @@ This GUI is currently optimized for **Python 3**, but Python 2 support will be c
    * [simple-pyspin](https://pypi.org/project/simple-pyspin/)
 
 These packages can all be installed via pip through the command line:
-    pip install simple-pyspin
+
+    `pip install simple-pyspin`
 
