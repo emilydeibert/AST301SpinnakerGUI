@@ -77,3 +77,7 @@ The user should type the file name as a name without an extension. The GUI will 
 The image will be saved in the directory from which the GUI is being run.
 
 Note that while the colormap of the GUI display can be changed, the image will be saved in a greyscale format. This is necessary in order to maintain the functionality of the associated `JupyterHub` notebook.
+
+### Updating the colormap
+
+The colormap is by default a greyscale (`Greys` in matplotlib), but can be updated to `inferno` or `jet` with the buttons located on the righthand side of the GUI. The update will be automatic in live viewing mode, and will be applied to the next image acquired in the single image mode. As mentioned above, the image will not save with the associated colormap, as this requires an extra axis in the image data to represent colours and will not work with the associated `JupyterHub` notebook.
