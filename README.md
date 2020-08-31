@@ -36,4 +36,40 @@ When the GUI opens, the gain/exposure time/sharpness have been set to default pa
 
 ![Default GUI view.](images/default.png)
 
+The image above shows the default view when the GUI is opened. 
 
+#### Switching between live viewing mode and single image mode.
+
+The GUI allows for two separate viewing modes with the camera: a live viewing mode and a single image mode. By default the GUI starts in a static single image mode, with the display showing the camera's view at the moment the GUI was launched.
+
+The live viewing mode shows a live view of what the camera is currently seeing. This mode can be activated by clicking the `Live Viewing Mode` button.
+
+The single image mode shows a static image of whatever the camera was viewing at the moment the button was clicked. This mode can be activated by clicking the `Single Image Mode` button. To update the static image, simply click the `Single Image Mode` button again.
+
+You can switch back and forth between these two modes as often as you'd like while running the GUI.
+
+#### Updating the camera parameters
+
+The GUI allows for the camera's gain, exposure time, and sharpness to be updated. These parameters are updated in real-time, meaning that the change will be visible immediately if you are in live viewing mode. If you are in single image mode, the change will be visible when the next static image is acquired.
+
+To update a parameter, type the desired value into the corresponding text box and press **Enter** or **Return** on your keyboard. If the parameter has updated successfully, the new value will be displayed in the GUI. Note that your desired value will be rounded to the nearest possible value allowed by the camera.
+
+**Gain**: The camera's gain is measured in units of decibels (dB), and can range from 0 to 20 dB. Note that this is a logarithmic scale. By default, the GUI opens with a gain value of ~ 5 dB.
+
+**Exposure Time**: The camera's exposure time is measured in units of microseconds, but the GUI displays a conversion to milliseconds and seconds as well. By default, the GUI opens with an exposure time of 10,000 microseconds.
+
+**Sharpness**: The camera's sharpness can range in value from 0 to 4000. By default, the GUI opens with a sharpness of 4000.
+
+#### Zooming in and out
+
+The GUI allows for the user to zoom in and out of images. This funtionality is available in both the live viewing mode and the single image mode. You can only zoom in once; if you press the button again after zooming in once, the image will not change. 
+
+The image being displayed is technically a numpy array, and the "zoom in" feature works by plotting a sliced version of this array. 
+
+#### Saving an image
+
+Images being displayed by the GUI can be saved using the `Save Current Image` button. The image currently displayed in the GUI is what will be saved: this is either the static image currently displayed in the single image mode, or an instantaneous snapshot of the live viewing mode. 
+
+The GUI only allows for images to be saved in a `.png` format that will work in the `JupyterHub` notebook associated with this lab. By default, the image will be saved as `image.png`, but the file name can be saved by typing a new name into the text box above the `Save Current Image` button and pressing **Enter** or **Return** on your keyboard. This will update the name written in brackets under the `Save Current Image` button. The name currently displayed in brackets is what the image will be saved as, so make sure this is correct before clicking the `Save Current Image` button.
+
+The user should type the file name as a name without an extension. The GUI will automatically save the image as a PNG and add the `.png` extension.
