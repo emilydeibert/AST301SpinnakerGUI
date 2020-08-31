@@ -30,7 +30,7 @@ To open the GUI, you simply run the following command from the command line:
 
 By default, many options available in the SpinView GUI that comes with the Spinnaker SDK are turned off and not viewable by users in this simple GUI. With this GUI, users are able to change several camera parameters (gain, exposure time, and sharpness), view images in a live viewing mode or in a single image mode, zoom in and out of images, modify the displayed image's colormap, and save the current image.
 
-#### Default Setup
+### Default Setup
 
 When the GUI opens, the gain/exposure time/sharpness have been set to default parameters, which will be displayed in the GUI. The camera will be in single image mode by default, a static image of whatever the camera was looking at when the GUI was launched will be displayed. The default colormap is set to `Greys`, and the default name for saved images is `image.png`.
 
@@ -38,7 +38,7 @@ When the GUI opens, the gain/exposure time/sharpness have been set to default pa
 
 The image above shows the default view when the GUI is opened. 
 
-#### Switching between live viewing mode and single image mode.
+### Switching between live viewing mode and single image mode.
 
 The GUI allows for two separate viewing modes with the camera: a live viewing mode and a single image mode. By default the GUI starts in a static single image mode, with the display showing the camera's view at the moment the GUI was launched.
 
@@ -48,7 +48,7 @@ The single image mode shows a static image of whatever the camera was viewing at
 
 You can switch back and forth between these two modes as often as you'd like while running the GUI.
 
-#### Updating the camera parameters
+### Updating the camera parameters
 
 The GUI allows for the camera's gain, exposure time, and sharpness to be updated. These parameters are updated in real-time, meaning that the change will be visible immediately if you are in live viewing mode. If you are in single image mode, the change will be visible when the next static image is acquired.
 
@@ -60,16 +60,20 @@ To update a parameter, type the desired value into the corresponding text box an
 
 **Sharpness**: The camera's sharpness can range in value from 0 to 4000. By default, the GUI opens with a sharpness of 4000.
 
-#### Zooming in and out
+### Zooming in and out
 
 The GUI allows for the user to zoom in and out of images. This funtionality is available in both the live viewing mode and the single image mode. You can only zoom in once; if you press the button again after zooming in once, the image will not change. 
 
 The image being displayed is technically a numpy array, and the "zoom in" feature works by plotting a sliced version of this array. 
 
-#### Saving an image
+### Saving an image
 
 Images being displayed by the GUI can be saved using the `Save Current Image` button. The image currently displayed in the GUI is what will be saved: this is either the static image currently displayed in the single image mode, or an instantaneous snapshot of the live viewing mode. 
 
 The GUI only allows for images to be saved in a `.png` format that will work in the `JupyterHub` notebook associated with this lab. By default, the image will be saved as `image.png`, but the file name can be saved by typing a new name into the text box above the `Save Current Image` button and pressing **Enter** or **Return** on your keyboard. This will update the name written in brackets under the `Save Current Image` button. The name currently displayed in brackets is what the image will be saved as, so make sure this is correct before clicking the `Save Current Image` button.
 
 The user should type the file name as a name without an extension. The GUI will automatically save the image as a PNG and add the `.png` extension.
+
+The image will be saved in the directory from which the GUI is being run.
+
+Note that while the colormap of the GUI display can be changed, the image will be saved in a greyscale format. This is necessary in order to maintain the functionality of the associated `JupyterHub` notebook.
