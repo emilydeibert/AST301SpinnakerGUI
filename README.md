@@ -34,4 +34,6 @@ By default, many options available in the SpinView GUI that comes with the Spinn
 
 When the GUI opens, the gain/exposure time/sharpness have been set to default parameters, which will be displayed in the GUI. The camera will be in single image mode by default, a static image of whatever the camera was looking at when the GUI was launched will be displayed. The default colormap is set to `Greys`, and the default name for saved images is `image.png`.
 
+![Default GUI view.](images/default.png)
+
 
