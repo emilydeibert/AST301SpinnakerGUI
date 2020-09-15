@@ -24,7 +24,7 @@ This GUI is currently optimized for **Python 3**, but Python 2 support will be c
    * matplotlib
    * tkinter
    * Pillow, which is a fork of the Python Imaging Library (PIL)
-    - You can follow the installation instructions [here](https://pillow.readthedocs.io/en/stable/) if you don't already have Pillow installed. Note that Pillow is a newer, maintained version of the deprecated PIL library. 
+      - You can follow the installation instructions [here](https://pillow.readthedocs.io/en/stable/) if you don't already have Pillow installed. Note that Pillow is a newer, maintained version of the deprecated PIL library. 
    * [simple-pyspin](https://pypi.org/project/simple-pyspin/)
 
 These packages can all be installed via pip through the command line:
