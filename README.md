@@ -1,7 +1,7 @@
 # AST301SpinnakerGUI
 A Python-based GUI for the AST301 lab using a FLIR camera and the Spinnaker SDK.
 
-This GUI is currently optimized for **Python 3**, but Python 2 support will be coming soon.
+This GUI is currently optimized for **Python 3**, but Python 2 support will be coming soon (if necessary).
 
 - [Installation of required dependencies](#installation-of-required-dependencies)
 - [Opening the GUI](#opening-the-gui)
@@ -17,13 +17,14 @@ This GUI is currently optimized for **Python 3**, but Python 2 support will be c
 
 1. [Install the Spinnaker SDK and PySpin from FLIR.](https://www.flir.com/products/spinnaker-sdk/)
    * PySpin installation packages will be included with your Spinnaker SDK download. 
-   * To install PySpin, you will have to follow the instructions provided by FLIR in these installation packages. These are available in the README.txt file that accompanies your Spinnaker SDK download. Be sure to use the PySpin installation package that matches your Spinnaker and Python verisons (for example, **spinnaker_python-2.0.0.147-cp27-cp27m-macosx_10_14_intel.tar.gz** refers to PySpin version 2.0.0.147 and Python version 2.7).
+   * To install PySpin, you will have to follow the instructions provided by FLIR in these installation packages. These are available in the README.txt file that accompanies your Spinnaker SDK download. Be sure to use the PySpin installation package that matches your Spinnaker and Python verisons (for example, **spinnaker_python-2.0.0.147-cp27-cp27m-macosx_10_14_intel.tar.gz** refers to PySpin version 2.0.0.147 and Python version 2.7). It's most important to make sure that you match the correct Python and PySpin versions (rather than your computer's OS, for example). So if you have Python version 3.6, find the installation package that says "cp37" in the file name.
 
 2. In addition to the Spinnaker SDK and PySpin, this GUI requires the following Python packages to be installed:
    * numpy
    * matplotlib
    * tkinter
-   * PIL
+   * Pillow, which is a fork of the Python Imaging Library (PIL)
+    ** You can follow the installation instructions [here](https://pillow.readthedocs.io/en/stable/) if you don't already have Pillow installed. Note that Pillow is a newer, maintained version of the deprecated PIL library. 
    * [simple-pyspin](https://pypi.org/project/simple-pyspin/)
 
 These packages can all be installed via pip through the command line:
