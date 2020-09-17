@@ -23,7 +23,7 @@ global savename
 savename = 'image'
 
 global cmap
-cmap='Greys'
+cmap='Greys_r'
 
 global image
 image = np.zeros((964, 1288))
@@ -217,7 +217,7 @@ with Camera() as cam:
 
 	def _cmapGreys():
 		global cmap
-		cmap = 'Greys'
+		cmap = 'Greys_r'
 
 	def _cmapInferno():
 		global cmap
