@@ -89,7 +89,7 @@ The GUI only allows for images to be saved in a `.png` format that will work in 
 
 The user should type the file name as a name without an extension. The GUI will automatically save the image as a PNG and add the `.png` extension.
 
-The image will be saved in the directory from which the GUI is being run.
+The image will be saved in the directory from which the GUI is being run. Note that the GUI will not be able to save the image properly if the path to your current directory has a space present, so please run from a directory with **no** spaces in the directory name or path.
 
 Note that while the colormap of the GUI display can be changed, the image will be saved in a greyscale format. This is necessary in order to maintain the functionality of the associated `JupyterHub` notebook.
 
