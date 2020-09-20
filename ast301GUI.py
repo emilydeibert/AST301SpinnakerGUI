@@ -72,10 +72,11 @@ with Camera() as cam:
 
 	cam.ExposureAuto = 'Off' # turn off auto exposure
 	cam.ExposureTime = 10000 # microseconds
-
-	cam.AcquisitionFrameRateEnabled = False # if True, can uncomment the next two lines
-	#cam.AcquisitionFrameRateAuto = 'Off'
-	#cam.AcquisitionFrameRate = 20
+	if cam.ExposureTime > 100000:
+   		cam.AcquisitionFrameRateEnabled = False # if True, can uncomment the next two lines
+	else:
+   		cam.AcquisitionFrameRateEnabled = True # if True, can uncomment the next two lines
+   		cam.AcquisitionFrameRateAuto = 'Off'
 
 	cam.pgrExposureCompensationAuto = 'Off'
 
@@ -103,11 +104,17 @@ with Camera() as cam:
 		Current_Gain.configure(text='Current Gain = %.3f' % float(cam.Gain))
 
 	def update_exp(event):
-		""" A function to update the exposure time, and change the text in the GUI.
-		Currently, this will only actually do anything if you're not in live viewing mode. 
-		"""
-		val = int(Exp_Entry.get())
-		cam.ExposureTime = val
+  		""" A function to update the exposure time, and change the text in the GUI.
+   		Currently, this will only actually do anything if you're not in live viewing mode. 
+   		"""
+   		val = int(Exp_Entry.get())
+   		if val > 100000:
+      			cam.AcquisitionFrameRateEnabled = False
+   		else:
+      			cam.AcquisitionFrameRateEnabled = True  # if True, can uncomment the next two lines
+      			cam.AcquisitionFrameRateAuto = 'Off'
+      			cam.AcquisitionFrameRate = 8
+   		cam.ExposureTime = val
 		Current_Exp_Micro.configure(text='Current Exposure Time = %.3f microseconds' % (cam.ExposureTime))
 		Current_Exp_Milli.configure(text='Current Exposure Time = %.3f milliseconds' % (float(cam.ExposureTime)*0.001))
 		Current_Exp_Sec.configure(text='Current Exposure Time = %.3f seconds' % (float(cam.ExposureTime)*1e-6))
@@ -206,9 +213,6 @@ with Camera() as cam:
 
 	def _save():
 		""" Just saves the current image.
-		NEED TO:
-		- set up functionality for changing the name
-		- set up functionality for acquiring many images
 		"""
 		#fig.savefig(savename+'.png', bbox_inches='tight', pad_inches=0)
 		#image.dump('test.npy')
