@@ -13,7 +13,7 @@ from PIL import Image
 # create global parameters
 # global parameter for upate frequency of camera image in live view
 global update_freq
-update_freq = 5 # milliseconds
+update_freq = 50 # milliseconds
 
 # global parameter for camera acquisition
 global running
@@ -31,7 +31,7 @@ image = np.zeros((964, 1288))
 global zoomMode
 zoomMode = False
 
-ColorMapOptions = ['Greys', 'inferno', 'viridis', 'jet']
+ColorMapOptions = ['Greys_r', 'inferno', 'viridis', 'jet']
 
 # running camera through simple_pyspin wrapper for PySpin (in turn a wrapper for the Spinnaker C++ framework)
 
@@ -41,17 +41,20 @@ with Camera() as cam:
 
 	cam.init()
 
-	cam.AcquisitionMode = 'Continuous'
+	cam.AcquisitionMode = 'SingleFrame'
 	cam.SharpnessEnabled = True
 	cam.SharpnessAuto = 'Off'
-	cam.Sharpness = 0	
+	cam.Sharpness = 750
 	cam.ExposureAuto='Off'
 	cam.ExposureTime = 10000
 	cam.GainAuto = 'Off'
-	gain = min(5, cam.get_info('Gain')['max'])
+	gain = min(0, cam.get_info('Gain')['max'])
 	cam.Gain = gain
-	cam.AcquisitionFrameRateEnabled = False
+	cam.AcquisitionFrameRateEnabled = True
+	cam.AcquisitionFrameRateAuto = 'Off'
+	cam.AcquisitionFrameRate = 8
 	cam.pgrExposureCompensationAuto = 'Off'
+	cam.pgrExposureCompensation = 1.5
 
 # run camera for GUI
 # reset the parameters again, for safety
@@ -59,26 +62,31 @@ with Camera() as cam:
 
 	cam.init() # initialize the camera
 
-	cam.AcquisitionMode = 'Continuous' # continuous acquisition mode
+	#cam.AcquisitionMode = 'Continuous' # continuous acquisition mode
+	cam.AcquisitionMode = 'SingleFrame' # single acquisition mode
 
 	cam.SharpnessEnabled = True # allow sharpness to be controlled
 								# if we turn this off, need to comment out the next two lines
 	cam.SharpnessAuto = 'Off'   # turn off auto sharpness
-	cam.Sharpness = 0			# set the sharpness to zero to start
+	cam.Sharpness = 750			# set the sharpness to zero to start
 
 	cam.GainAuto = 'Off'						# turn automatic gain off
-	gain = min(5, cam.get_info('Gain')['max'])	# don't allow the gain to exceed the max gain of 20
-	cam.Gain = gain 							# set the camera gain to 3
+	gain = min(0, cam.get_info('Gain')['max'])	# don't allow the gain to exceed the max gain of 24
+	cam.Gain = gain 							# set the camera gain to 0
 
 	cam.ExposureAuto = 'Off' # turn off auto exposure
 	cam.ExposureTime = 10000 # microseconds
+
+	#Allow both long and short exposure times, without creating lag in live-viewing when  doing short.
 	if cam.ExposureTime > 100000:
-   		cam.AcquisitionFrameRateEnabled = False # if True, can uncomment the next two lines
+		cam.AcquisitionFrameRateEnabled = False # if True, can uncomment the next two lines
 	else:
-   		cam.AcquisitionFrameRateEnabled = True # if True, can uncomment the next two lines
-   		cam.AcquisitionFrameRateAuto = 'Off'
+		cam.AcquisitionFrameRateEnabled = True # if True, can uncomment the next two lines
+		cam.AcquisitionFrameRateAuto = 'Off'
+		cam.AcquisitionFrameRate = 8
 
 	cam.pgrExposureCompensationAuto = 'Off'
+	cam.pgrExposureCompensation = 1.5
 
 	def update_im():
 		""" A function to continuously update the image while in live viewing mode.
@@ -100,21 +108,22 @@ with Camera() as cam:
 		""" A function to update the camera gain, and change the text in the GUI.
 		"""
 		val = int(Gain_Entry.get())
-		cam.Gain = min(val, cam.get_info('Gain')['max']) # don't allow it to exceed the camera max of 20
+		cam.Gain = min(val, cam.get_info('Gain')['max']) # don't allow it to exceed the camera max of 24
 		Current_Gain.configure(text='Current Gain = %.3f' % float(cam.Gain))
 
 	def update_exp(event):
-  		""" A function to update the exposure time, and change the text in the GUI.
-   		Currently, this will only actually do anything if you're not in live viewing mode. 
-   		"""
-   		val = int(Exp_Entry.get())
-   		if val > 100000:
-      			cam.AcquisitionFrameRateEnabled = False
-   		else:
-      			cam.AcquisitionFrameRateEnabled = True  # if True, can uncomment the next two lines
-      			cam.AcquisitionFrameRateAuto = 'Off'
-      			cam.AcquisitionFrameRate = 8
-   		cam.ExposureTime = val
+		""" A function to update the exposure time, and change the text in the GUI.
+		Currently, this will only actually do anything if you're not in live viewing mode. 
+		"""
+		val = int(Exp_Entry.get())
+		if val > 100000:
+			cam.AcquisitionFrameRateEnabled = False
+		else:
+			cam.AcquisitionFrameRateEnabled = True  # if True, can uncomment the next two lines
+			cam.AcquisitionFrameRateAuto = 'Off'
+			cam.AcquisitionFrameRate = 8
+
+		cam.ExposureTime = val
 		Current_Exp_Micro.configure(text='Current Exposure Time = %.3f microseconds' % (cam.ExposureTime))
 		Current_Exp_Milli.configure(text='Current Exposure Time = %.3f milliseconds' % (float(cam.ExposureTime)*0.001))
 		Current_Exp_Sec.configure(text='Current Exposure Time = %.3f seconds' % (float(cam.ExposureTime)*1e-6))
@@ -153,7 +162,7 @@ with Camera() as cam:
 
 	#global image
 	image = cam.get_array()
-	im = ax.imshow(image, cmap=cmap) # by default, we start showing the first image the camera was looking at
+	im = ax.imshow(image, vmin=0,vmax=255,cmap=cmap) # by default, we start showing the first image the camera was looking at
 
 	canvas = FigureCanvasTkAgg(fig, master=imageFrame)  # A tk.DrawingArea.
 	canvas.draw()
@@ -175,11 +184,14 @@ with Camera() as cam:
 		cam.start() # start acquiring data
 		global running
 		running = True # need this for the uodate_im function, to keep updating the image
-		cam.ExposureTime = 10000 # we force set an exposure time. If not, the update may be buggy
+		val = cam.ExposureTime
+		#print(val)
+		cam.ExposureTime = val # we force set an exposure time. If not, the update may be buggy
+		#cam.ExposureTime = 10000 # we force set an exposure time. If not, the update may be buggy
 		if running:
 			cam.AcquisitionMode = 'Continuous'
 			global update_freq
-			update_freq = 5
+			update_freq = 50
 			update_im() # updates the image every 5 milliseconds
 
 	def _single():
@@ -213,6 +225,9 @@ with Camera() as cam:
 
 	def _save():
 		""" Just saves the current image.
+		NEED TO:
+		- set up functionality for changing the name
+		- set up functionality for acquiring many images
 		"""
 		#fig.savefig(savename+'.png', bbox_inches='tight', pad_inches=0)
 		#image.dump('test.npy')
